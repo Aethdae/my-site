@@ -4,6 +4,7 @@ const introStrings = ["Greetings!", "Welcome to the journey.", "What is your nam
 var inventory = new Map();
 
 
+
 /**
  * Launch to initialize state and animations
  * TODO: Add loading from cookies? JS? Json? LocalFile?
