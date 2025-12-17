@@ -1,0 +1,142 @@
+.pad-5 {
+  padding: .33rem;
+}
+.pad-10 {
+  padding: .66rem;
+}
+.pad-15 {
+  padding: 1rem;
+}
+.pad-20 {
+  padding: 1.33rem;
+}
+.pad-25 {
+  padding: 1.66rem;
+}
+
+.marg-5 {
+  margin: 5px;
+}
+.marg-10 {
+  margin: 10px;
+}
+.marg-15 {
+  margin: 15px;
+}
+.marg-20 {
+  margin: 20px;
+}
+.marg-25 {
+  margin: 25px;
+}
+
+.marg-top-5 {
+  margin-top: 5px;
+}
+.marg-top-10 {
+  margin-top: 10px;
+}
+.marg-top-15 {
+  margin-top: 15px;
+}
+.marg-top-20 {
+  margin-top: 20px;
+}
+.marg-top-25 {
+  margin-top: 25px;
+}
+
+.marg-bot-5 {
+  margin-bottom: 5px;
+}
+.marg-bot-10 {
+  margin-bottom: 10px;
+}
+.marg-bot-15 {
+  margin-bottom: 15px;
+}
+.marg-bot-20 {
+  margin-bottom: 20px;
+}
+.marg-bot-25 {
+  margin-bottom: 25px;
+}
+
+.marg-right-5 {
+  margin-right: 5px;
+}
+.marg-right-10 {
+  margin-right: 10px;
+}
+.marg-right-15 {
+  margin-right: 15px;
+}
+.marg-right-20 {
+  margin-right: 20px;
+}
+.marg-right-25 {
+  margin-right: 25px;
+}
+
+.marg-left-5 {
+  margin-left: 5px;
+}
+.marg-left-10 {
+  margin-left: 10px;
+}
+.marg-left-15 {
+  margin-left: 15px;
+}
+.marg-left-20 {
+  margin-left: 20px;
+}
+.marg-left-25 {
+  margin-left: 25px;
+}
+
+/*
+old tests
+/* Check screen size and change orientation of cards from row to column as size allows */
+@media (width < 1000px) {
+  .column-center-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+@media (width >= 1000px) {
+  .column-center-container {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+*/
+
+/* Default flex layout for columns */
+.column-center {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Default flex layout for rows */
+.row-center {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Helper border classes */
+.rounded-border {
+  border-radius: 14px;
+}
+
+.ellipse-border-bot-left {
+  border-radius: 20% 20% 20% 40%;
+}
