@@ -1,0 +1,18 @@
+{
+    "pregameHeaderText": [
+        "Welcome adventurer.", "You will soon embark on a journey.", "What is your name?"
+    ],
+    "sections": {
+        "start": { 
+            "bodyText": "You awaken near a large mountain with bustling activity nearby. Carts pulled by horses and oxen alike pass you by as just a vagabond that's lost their way. Once your dazed state begins to clear up, you stand up and", 
+            "cardTexts": ["Explore the area.", "Inspect the mountain.", "", "", ""], 
+            "headerText": "Ah, welcome" 
+        },
+        
+        "explore": { 
+            "bodyText": "",
+            "cardTexts": ["", "", "", ""], 
+            "headerText": "Exploring the area..." 
+        }
+    }
+}
