@@ -1,10 +1,60 @@
 const doc = document;
-const potentialItems = ["Pickaxe", "Torch", "Sword", "Axe", "Gun"];
-const introStrings = ["Greetings!", "Welcome to the journey.", "What is your name?"]
+const choiceButtonIDs = ["choiceOne", "choiceTwo", "choiceThree", "choiceFour"];
+const optionButtonIDs = ["restartButton", "exitButton"];
 var inventory = new Map();
 const jsonUrl = "./data.json"
 var jsonData;
 var playerName;
+
+const gameStates = [];
+var currentState = "";
+
+const choiceOne = doc.getElementById("choiceOne");
+const choiceTwo = doc.getElementById("choiceTwo");
+const choiceThree = doc.getElementById("choiceThree");
+const choiceFour = doc.getElementById("choiceFour");
+
+class ChoiceObject {
+    constructor(choiceOne, choiceTwo, choiceThree, choiceFour) {
+        this.choice1 = choiceOne;
+        this.choice2 = choiceTwo;
+        this.choice3 = choiceThree;
+        this.choice4 = choiceFour;
+    }
+}
+const choiceButtons = new ChoiceObject({choiceOne, choiceTwo, 
+    choiceThree, choiceFour,
+
+    get choice1() {
+        return this.choice1;
+    },
+    get choice2() {
+        return this.choice2;
+    },
+    get choice3() {
+        return this.choice3;
+    },
+    get choice4() {
+        return this.choice4;
+    }
+});
+
+const restartButton = doc.getElementById("restartButton");
+const exitButton = doc.getElementById("exitButton");
+
+const titleCard = doc.getElementById("titleCard");
+const topScreen = doc.getElementById("topScreen");
+const bottomScreen = doc.getElementById("bottomScreen");
+
+const leftColumn = doc.getElementById("leftColumn");
+const rightColumn = doc.getElementById("rightColumn");
+
+class enumStorage
+{
+    //maybe expand gamestate to here instead?
+}
+
+startUp();
 
 /**
  * Launch to initialize state and animations
@@ -15,21 +65,35 @@ async function startUp()
     await getJson();
     
     let initCards = doc.getElementsByClassName("initCard");
+    
     //html elements still don't have foreach
-    //initCards.forEach((card) => animateCards(card));
-
     for (let x = 0; x < initCards.length; x++)
     {
         animateCardsLoad(initCards[x].id);
     }
     console.log("Cards are animating!");
 
+    assignButtons();
     animateSideColumn("leftColumn");
     animateSideColumn("rightColumn");
     console.log("Columns are animating");
     setupInventory();
+    setupGameStates();
 
     displayBeginning();
+}
+
+/**
+ * Creates eventhandlers for each button.
+ */
+function assignButtons()
+{
+    choiceButtonIDs.forEach((id) => {
+        doc.getElementById(id).onclick = () => buttonClicked(id);
+    });
+    optionButtonIDs.forEach((id) => {
+        doc.getElementById(id).onclick = () => resourceButtonClicked(id);
+    });
 }
 
 /**
@@ -56,9 +120,9 @@ async function getJson()
  */
 function setupInventory()
 {
-    for (let x = 0; x < potentialItems.length; x++)
+    for (let x = 0; x < jsonData.potentialItems.length; x++)
     {
-        inventory.set(potentialItems[x], false);
+        inventory.set(jsonData.potentialItems[x], false);
     }
     
     console.log("Inventory has: ", inventory.entries());
@@ -71,7 +135,6 @@ function setupInventory()
 function animateCardsLoad(id)
 {
     let element = doc.getElementById(id);
-    console.log(`card is animating!`);
     element.style.transition = "transform ease-in-out 1.2s 0.0s";
     element.style.transform = "scale(10000%)";
 }
@@ -94,14 +157,30 @@ function animateSideColumn(id)
 */
 function displayBeginning()
 {
-    let nameEntry = doc.getElementById("nameEntry");
     setTimeout(() => {
         animateText("titleCard", jsonData.pregameHeaderText[0])
     }, 50);
-    setTimeout(() => {animateText( "titleCard", jsonData.pregameHeaderText[1])}, 4050);
-    setTimeout(() => {animateText( "titleCard", jsonData.pregameHeaderText[2])}, 8050);
-    //animateText("titleCard", jsonData.pregameHeaderText[0]);
-    nameEntry.hidden = false;
+    setTimeout(() => {animateText( "titleCard", jsonData.pregameHeaderText[1])}, 1050);
+    setTimeout(() => {
+        animateText( "titleCard", jsonData.pregameHeaderText[2])
+        showNameEntry();
+        updateGameState(gameStates[0]);
+        console.log(getCurrentGameState());
+        transitionToScene("beginning");
+    }, 2050);
+}
+
+/**
+ * Bring up text box for name entry.
+ */
+function showNameEntry()
+{
+    console.log("Showing name");
+    element = doc.getElementById("textEntryHolder");
+    doc.getElementById("nameEntry").hidden = false;
+    element.hidden = false;
+    element.style.transition = "1.5s background-color 0.0s ease-out";
+    element.style.backgroundColor = "rgba(176, 176, 176, 1.0)";
 }
 
 /**
@@ -122,5 +201,195 @@ function animateText(id, string)
     }
 }
 
-startUp();
+
+/**
+ * Emulates button clicks via eventListening.
+ * @param {string} id String of HTML element's ID.
+ */
+function buttonClicked(id)
+{
+    let state = getCurrentGameState();
+    console.log(`${id} is pressed at ${state} gameState`);
+
+    switch (state)
+    {
+        case gameStates[0]:
+        {
+            switch (id)
+            {
+                case choiceButtonIDs[0]:
+                    break;
+                case choiceButtonIDs[1]:
+                    break;
+                case choiceButtonIDs[2]:
+                    break;
+                case choiceButtonIDs[3]:
+                    break;
+            }
+        }
+        case gameStates[1]:
+        {
+            switch (id)
+            {
+                case choiceButtonIDs[0]:
+                    break;
+                case choiceButtonIDs[1]:
+                    break;
+                case choiceButtonIDs[2]:
+                    break;
+                case choiceButtonIDs[3]:
+                    break;
+            }
+        }
+        case gameStates[2]:
+        {
+            switch (id)
+            {
+                case choiceButtonIDs[0]:
+                    break;
+                case choiceButtonIDs[1]:
+                    break;
+                case choiceButtonIDs[2]:
+                    break;
+                case choiceButtonIDs[3]:
+                    break;
+            }
+        }
+        case gameStates[3]:
+        {
+            switch (id)
+            {
+                case choiceButtonIDs[0]:
+                    break;
+                case choiceButtonIDs[1]:
+                    break;
+                case choiceButtonIDs[2]:
+                    break;
+                case choiceButtonIDs[3]:
+                    break;
+            }
+        }
+        case gameStates[4]:
+        {
+            switch (id)
+            {
+                case choiceButtonIDs[0]:
+                    break;
+                case choiceButtonIDs[1]:
+                    break;
+                case choiceButtonIDs[2]:
+                    break;
+                case choiceButtonIDs[3]:
+                    break;
+            }
+        }
+        case gameStates[5]:
+        {
+            switch (id)
+            {
+                case choiceButtonIDs[0]:
+                    break;
+                case choiceButtonIDs[1]:
+                    break;
+                case choiceButtonIDs[2]:
+                    break;
+                case choiceButtonIDs[3]:
+                    break;
+            }
+        }
+        case gameStates[6]:
+        {
+            switch (id)
+            {
+                case choiceButtonIDs[0]:
+                    break;
+                case choiceButtonIDs[1]:
+                    break;
+                case choiceButtonIDs[2]:
+                    break;
+                case choiceButtonIDs[3]:
+                    break;
+            }
+        }
+    }
+}
+
+/**
+ * Events for the two buttons at the bottom.
+ * @param {string} id The ID of the button
+ */
+function resourceButtonClicked(id)
+{
+    switch (id)
+    {
+        case optionButtonIDs[0]:
+            startUp();
+            break;
+        case optionButtonIDs[1]:
+            //close();
+            break;
+    }
+}
+
+
+function setupGameStates()
+{
+    /*
+    //for (let x = 0; x < jsonData.sections.length; x++)
+    for (let x = 0; x < Object.keys(jsonData.sections).length; x++)
+    {
+        console.log(gameStates);
+        gameStates.push(Object.keys(jsonData.sections)[x].state);
+        // gameStates.push(jsonData.sections[x]['state']);
+    }
+    */
+
+    Object.keys(jsonData.scenes).forEach((key) => {
+        gameStates.push(jsonData.scenes[key].state);
+    });
+    console.log(gameStates);
+}
+
+/**
+ * 
+ * @returns state as a String
+ */
+function getCurrentGameState(){
+    return currentState;
+}
+
+function updateGameState(newState){
+    currentState = newState;
+}
+
+function transitionToScene(sceneName)
+{
+    let scenes = Object.keys(jsonData.scenes);
+    console.log(scenes);
+    switch (sceneName)
+    {
+        case scenes[0]:
+            break;
+        case scenes[1]:
+            break;
+    }
+        
+    
+    updateButtonText(choiceButtons.choice1, jsonData.scenes[sceneName].choiceTexts[0]);
+    updateButtonText(choiceButtons.choice2, jsonData.scenes[sceneName].choiceTexts[1]);
+    updateButtonText(choiceButtons.choice3, jsonData.scenes[sceneName].choiceTexts[2]);
+    updateButtonText(choiceButtons.choice4, jsonData.scenes[sceneName].choiceTexts[3]);
+    
+}
+
+/**
+ * 
+ * @param {HTMLElement} button 
+ * @param {string} newText 
+ */
+function updateButtonText(button, newText)
+{
+    button.innerHTML = newText;
+}
+
 

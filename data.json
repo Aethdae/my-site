@@ -1,18 +1,55 @@
 {
+    "potentialItems": ["Pickaxe", "Torch", "Sword", "Axe", "Gun"],
+
     "pregameHeaderText": [
         "Welcome adventurer.", "You will soon embark on a journey.", "What is your name?"
     ],
-    "sections": {
-        "start": { 
+    "scenes": { 
+        "beginning": {
+            "state": "beginning",
+            "bodyText": "Please enter your name:",
+            "choiceTexts": ["", "", "", "", ""], 
+            "headerText": "Ah, welcome",
+            "headerColor": "rgb(80, 20, 20)"
+        },
+        "start": {
+            "state": "start",
             "bodyText": "You awaken near a large mountain with bustling activity nearby. Carts pulled by horses and oxen alike pass you by as just a vagabond that's lost their way. Once your dazed state begins to clear up, you stand up and", 
-            "cardTexts": ["Explore the area.", "Inspect the mountain.", "", "", ""], 
-            "headerText": "Ah, welcome" 
+            "choiceTexts": ["Explore the area.", "Inspect the mountain.", "", "", ""], 
+            "headerText": "Ah, welcome",
+            "headerColor": "rgb(80, 20, 20)"
         },
         
         "explore": { 
+            "state": "explore",
             "bodyText": "",
-            "cardTexts": ["", "", "", ""], 
-            "headerText": "Exploring the area..." 
+            "choiceTexts": ["Take the axe.", "Take the torch.", "Return to start.", ""], 
+            "headerText": "Exploring the area..." ,
+            "headerColor": "rgb(80, 20, 20)"
+        },
+
+        "mountain":{
+            "state": "mountain",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""], 
+            "headerText": "",
+            "headerColor": "rgb(80, 20, 20)"
+        },
+
+        "fightOne": {
+            "state": "fightOne",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(80, 20, 20)"
+        },
+
+        "bossFight": {
+            "state": "bossFight",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(30, 30, 30)"
         }
     }
 }
