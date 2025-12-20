@@ -1,58 +1,48 @@
+
+//#endregion
+
+//#region Variables
 const doc = document;
-const choiceButtonIDs = ["choiceOne", "choiceTwo", "choiceThree", "choiceFour"];
-const optionButtonIDs = ["restartButton", "exitButton"];
+var initialized = false;
 var inventory = new Map();
 const jsonUrl = "./data.json"
 var jsonData;
+
+const randomNames = ["Sylas", "Meridiel", "Winston", "Jordan" ];
 var playerName;
 
 const gameStates = [];
 var currentState = "";
+
 
 const choiceOne = doc.getElementById("choiceOne");
 const choiceTwo = doc.getElementById("choiceTwo");
 const choiceThree = doc.getElementById("choiceThree");
 const choiceFour = doc.getElementById("choiceFour");
 
-class ChoiceObject {
-    constructor(choiceOne, choiceTwo, choiceThree, choiceFour) {
-        this.choice1 = choiceOne;
-        this.choice2 = choiceTwo;
-        this.choice3 = choiceThree;
-        this.choice4 = choiceFour;
-    }
-}
-const choiceButtons = new ChoiceObject({choiceOne, choiceTwo, 
-    choiceThree, choiceFour,
-
-    get choice1() {
-        return this.choice1;
-    },
-    get choice2() {
-        return this.choice2;
-    },
-    get choice3() {
-        return this.choice3;
-    },
-    get choice4() {
-        return this.choice4;
-    }
-});
-
 const restartButton = doc.getElementById("restartButton");
 const exitButton = doc.getElementById("exitButton");
 
+const choiceButtons = { 
+    fff: choiceOne, two: choiceTwo, three: choiceThree, four: choiceFour
+};
+
+const optionButtons = { 
+    one: restartButton, two: exitButton
+}
+
+const headerTop = doc.getElementById("top");
 const titleCard = doc.getElementById("titleCard");
 const topScreen = doc.getElementById("topScreen");
 const bottomScreen = doc.getElementById("bottomScreen");
+const mainParagraph = doc.getElementById("mainParagraph");
 
 const leftColumn = doc.getElementById("leftColumn");
 const rightColumn = doc.getElementById("rightColumn");
+const nameEntry = doc.getElementById("nameEntry");
+const textEntryHolder = doc.getElementById("textEntryHolder");
+//#endregion
 
-class enumStorage
-{
-    //maybe expand gamestate to here instead?
-}
 
 startUp();
 
@@ -66,19 +56,22 @@ async function startUp()
     
     let initCards = doc.getElementsByClassName("initCard");
     
-    //html elements still don't have foreach
     for (let x = 0; x < initCards.length; x++)
     {
         animateCardsLoad(initCards[x].id);
     }
-    console.log("Cards are animating!");
+    console.log("Cards are animating...");
 
-    assignButtons();
-    animateSideColumn("leftColumn");
-    animateSideColumn("rightColumn");
-    console.log("Columns are animating");
-    setupInventory();
-    setupGameStates();
+    if (!initialized)
+    {
+        initialized = true;
+        assignButtons();
+        animateSideColumn("leftColumn");
+        animateSideColumn("rightColumn");
+        console.log("Columns are animating...");
+        setupInventory();
+        setupGameStates();
+    }
 
     displayBeginning();
 }
@@ -88,12 +81,43 @@ async function startUp()
  */
 function assignButtons()
 {
+    console.log("Assigning Buttons...");
+    let buttons = Object.values(choiceButtons);
+    let oButtons = Object.values(optionButtons);
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", () => buttonClicked(button));
+
+        //option to disable buttons at certain points, currently always active
+        button.dataset.active = true;
+    });
+    oButtons.forEach((button) => {
+        button.addEventListener("click", () => resourceButtonClicked(button));
+    });
+
+    //#region Failed attempts/deprecated
+    /* other attempts
+    for (let button in buttons)
+    {
+        //button.onclick = () => buttonClicked(button);
+    }
+
+    for (let optionButton in optionButtons)
+    {
+        addEventListener("click", () => resourceButtonClicked(optionButton));
+        //optionButton.onclick = () => resourceButtonClicked(optionButton.id)
+    }
+    */
+
+    //original
+    /*
     choiceButtonIDs.forEach((id) => {
         doc.getElementById(id).onclick = () => buttonClicked(id);
     });
     optionButtonIDs.forEach((id) => {
         doc.getElementById(id).onclick = () => resourceButtonClicked(id);
     });
+    */
 }
 
 /**
@@ -120,6 +144,8 @@ async function getJson()
  */
 function setupInventory()
 {
+    console.log("Assigning new Inventory...");
+
     for (let x = 0; x < jsonData.potentialItems.length; x++)
     {
         inventory.set(jsonData.potentialItems[x], false);
@@ -158,16 +184,15 @@ function animateSideColumn(id)
 function displayBeginning()
 {
     setTimeout(() => {
-        animateText("titleCard", jsonData.pregameHeaderText[0])
+        animateText("titleCard", jsonData.pregameHeaderText[0], 2.0)
     }, 50);
-    setTimeout(() => {animateText( "titleCard", jsonData.pregameHeaderText[1])}, 1050);
+    setTimeout(() => {animateText( "titleCard", jsonData.pregameHeaderText[1], 2.0)}, 4050);
     setTimeout(() => {
-        animateText( "titleCard", jsonData.pregameHeaderText[2])
+        setGameState(gameStates[0]);
         showNameEntry();
-        updateGameState(gameStates[0]);
         console.log(getCurrentGameState());
         transitionToScene("beginning");
-    }, 2050);
+    }, 8050);
 }
 
 /**
@@ -176,162 +201,241 @@ function displayBeginning()
 function showNameEntry()
 {
     console.log("Showing name");
-    element = doc.getElementById("textEntryHolder");
-    doc.getElementById("nameEntry").hidden = false;
-    element.hidden = false;
-    element.style.transition = "1.5s background-color 0.0s ease-out";
-    element.style.backgroundColor = "rgba(176, 176, 176, 1.0)";
+
+    //nameEntry.hidden = false;
+    
+    mainParagraph.style.textAlign = "center";
+    mainParagraph.style.fontSize = "4rem";
+    textEntryHolder.hidden = false;
+    textEntryHolder.style.transition = "1.5s background-color 0.0s ease-in-out";
+    textEntryHolder.addEventListener("transitionend", () => { nameEntry.hidden = textEntryHolder.hidden });
+    textEntryHolder.style.backgroundColor = "rgba(9, 9, 9, 1.0)";
+}
+
+/**
+ * Sets player name into memory.
+ * @param {string} nameString string from nameEntry textBox
+ */
+function submitName(nameString)
+{
+    console.log("Submitting name");
+    mainParagraph.style.textAlign = "left";
+    mainParagraph.style.fontSize = "1.5rem";
+    playerName = nameString;
+
+    textEntryHolder.hidden = true;
+    textEntryHolder.style.transition = ".5s background-color 0.0s ease-in";
+    textEntryHolder.style.backgroundColor = "rgba(176, 176, 176, 0)";
 }
 
 /**
  * Removes the current text, then animates the string as typed out.
  * @param {string} id ID of HTML element to animate text on.
- * @param {string} string Text to animate
+ * @param {string} string Text to animate.
+ * @param {number} multiplier Speed multiplier of text animation.
  */
-function animateText(id, string)
+function animateText(id, string, multiplier = 1.0)
 {
     console.log("Text is animating.")
     let element = document.getElementById(id);
     element.innerHTML = "";
     let splitString = string.split("");
     //timer, loops over string adding one char at a time?
-    for(let x = 0; x < splitString.length * 50; x+=50)
+    for(let x = 0; x < splitString.length * 50 / multiplier; x += 50 / multiplier)
     {
-        setTimeout(() => {element.append(splitString[x/50])}, x);
+        setTimeout(() => {element.append(splitString[x/(50/multiplier)])}, x);
     }
 }
 
 
 /**
  * Emulates button clicks via eventListening.
- * @param {string} id String of HTML element's ID.
+ * @param {HTMLElement} element Button as HTML element.
  */
-function buttonClicked(id)
+function buttonClicked(element)
 {
+    //gameStates: , , , , , , 
+    let scenes = Object.keys(jsonData.scenes);
     let state = getCurrentGameState();
-    console.log(`${id} is pressed at ${state} gameState`);
+    let buttons = Object.values(choiceButtons);
 
-    switch (state)
+    //why is it a string =(
+    console.log(typeof(element.dataset.active));
+
+
+    //option to disable buttons at certain points, currently always active
+    if (element.dataset.active == "true")
     {
-        case gameStates[0]:
+        switch (state)
         {
-            switch (id)
+            //beginning
+            case gameStates[0]:
             {
-                case choiceButtonIDs[0]:
-                    break;
-                case choiceButtonIDs[1]:
-                    break;
-                case choiceButtonIDs[2]:
-                    break;
-                case choiceButtonIDs[3]:
-                    break;
+                switch (element)
+                {
+                    case buttons[0]:
+                        let nameString = nameEntry.value;
+                        submitName(nameString);
+                        transitionToScene("start");
+                        break;
+                    case buttons[1]:
+                        let randNumber = Math.floor(Math.random() * 4);
+                        submitName(randomNames[randNumber]);
+                        transitionToScene("start");
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
             }
-        }
-        case gameStates[1]:
-        {
-            switch (id)
+            break;
+
+            //start
+            case gameStates[1]:
             {
-                case choiceButtonIDs[0]:
-                    break;
-                case choiceButtonIDs[1]:
-                    break;
-                case choiceButtonIDs[2]:
-                    break;
-                case choiceButtonIDs[3]:
-                    break;
+                switch (element)
+                {
+                    case buttons[0]:
+                        transitionToScene("explore");
+                        break;
+                    case buttons[1]:
+                        transitionToScene("mountain");
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
             }
-        }
-        case gameStates[2]:
-        {
-            switch (id)
+            break;
+
+            //explore
+            case gameStates[2]:
             {
-                case choiceButtonIDs[0]:
-                    break;
-                case choiceButtonIDs[1]:
-                    break;
-                case choiceButtonIDs[2]:
-                    break;
-                case choiceButtonIDs[3]:
-                    break;
+                switch (element)
+                {
+                    case buttons[0]:
+                        //add axe
+                        if (!inventory.get("Axe"))
+                        {
+                            inventory.set("Axe", true);
+                            console.log(inventory.get("Axe"));
+                        }
+                        element.innerHTML = "Axe grabbed";
+                        break;
+                    case buttons[1]:
+                        if (!inventory.get("Torch"))
+                        {
+                            inventory.set("Torch", true);
+                            console.log(inventory.get("Torch"));
+                        }
+                        element.innerHTML = "Torch grabbed";
+                        //add torch
+                        break;
+                    case buttons[2]:
+                        transitionToScene("startReturn");
+                        break;
+                    case buttons[3]:
+                        break;
+                }
             }
-        }
-        case gameStates[3]:
-        {
-            switch (id)
+            break;
+
+            //mountain
+            case gameStates[3]:
             {
-                case choiceButtonIDs[0]:
-                    break;
-                case choiceButtonIDs[1]:
-                    break;
-                case choiceButtonIDs[2]:
-                    break;
-                case choiceButtonIDs[3]:
-                    break;
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
             }
-        }
-        case gameStates[4]:
-        {
-            switch (id)
+            break;
+
+            //startReturn
+            case gameStates[4]:
             {
-                case choiceButtonIDs[0]:
-                    break;
-                case choiceButtonIDs[1]:
-                    break;
-                case choiceButtonIDs[2]:
-                    break;
-                case choiceButtonIDs[3]:
-                    break;
+                switch (element)
+                {
+                    case buttons[0]:
+                        transitionToScene("mountain");
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
             }
-        }
-        case gameStates[5]:
-        {
-            switch (id)
+            break;
+
+            //fightOne
+            case gameStates[5]:
             {
-                case choiceButtonIDs[0]:
-                    break;
-                case choiceButtonIDs[1]:
-                    break;
-                case choiceButtonIDs[2]:
-                    break;
-                case choiceButtonIDs[3]:
-                    break;
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
             }
-        }
-        case gameStates[6]:
-        {
-            switch (id)
+            break;
+
+            //bossFight
+            case gameStates[6]:
             {
-                case choiceButtonIDs[0]:
-                    break;
-                case choiceButtonIDs[1]:
-                    break;
-                case choiceButtonIDs[2]:
-                    break;
-                case choiceButtonIDs[3]:
-                    break;
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
             }
+            break;
+
         }
     }
 }
 
 /**
  * Events for the two buttons at the bottom.
- * @param {string} id The ID of the button
+ * @param {HTMLElement} element The HTMLElement of the button
  */
-function resourceButtonClicked(id)
+function resourceButtonClicked(element)
 {
-    switch (id)
+    let buttons = Object.values(optionButtons);
+    switch (element)
     {
-        case optionButtonIDs[0]:
+        case buttons[0]:
             startUp();
             break;
-        case optionButtonIDs[1]:
+        case buttons[1]:
             //close();
             break;
     }
 }
 
-
+/**
+ * Adds the Game States to the array from jsonData Object
+ */
 function setupGameStates()
 {
     /*
@@ -344,10 +448,11 @@ function setupGameStates()
     }
     */
 
+    //push adds to back to array, basically .add from C#
     Object.keys(jsonData.scenes).forEach((key) => {
         gameStates.push(jsonData.scenes[key].state);
     });
-    console.log(gameStates);
+    console.log(`Gamestates set up as: ${gameStates}`);
 }
 
 /**
@@ -358,38 +463,118 @@ function getCurrentGameState(){
     return currentState;
 }
 
-function updateGameState(newState){
+/**
+ * Changes GameState to newState
+ * @param {string} newState state to change to.
+ */
+function setGameState(newState){
     currentState = newState;
-}
-
-function transitionToScene(sceneName)
-{
-    let scenes = Object.keys(jsonData.scenes);
-    console.log(scenes);
-    switch (sceneName)
-    {
-        case scenes[0]:
-            break;
-        case scenes[1]:
-            break;
-    }
-        
-    
-    updateButtonText(choiceButtons.choice1, jsonData.scenes[sceneName].choiceTexts[0]);
-    updateButtonText(choiceButtons.choice2, jsonData.scenes[sceneName].choiceTexts[1]);
-    updateButtonText(choiceButtons.choice3, jsonData.scenes[sceneName].choiceTexts[2]);
-    updateButtonText(choiceButtons.choice4, jsonData.scenes[sceneName].choiceTexts[3]);
-    
 }
 
 /**
  * 
- * @param {HTMLElement} button 
- * @param {string} newText 
+ * @param {string} sceneName New scene name as string from Json Object; 
  */
-function updateButtonText(button, newText)
+function transitionToScene(sceneName)
 {
-    button.innerHTML = newText;
+    for (let x = 0; x < 4; x++)
+    {
+        updateButtonText(Object.values(choiceButtons)[x], "", 0);
+    }
+    let scenes = Object.keys(jsonData.scenes);
+    setGameState(jsonData.scenes[sceneName].state);
+
+    //additional required logic per scene, i.e. animations, color change, etc.
+    switch (sceneName)
+    {
+        case scenes[0]:
+            updateHeaderText(jsonData.scenes[sceneName].headerText);
+            break;
+        case scenes[1]:
+            updateHeaderText(jsonData.scenes[sceneName].headerText, playerName);
+            break;
+        case scenes[2]:
+            updateHeaderText(jsonData.scenes[sceneName].headerText);
+            break;
+        case scenes[3]:
+            updateHeaderText(jsonData.scenes[sceneName].headerText);
+            break;
+        case scenes[4]:
+            updateHeaderText(jsonData.scenes[sceneName].headerText);
+            break;
+        case scenes[5]:
+            updateHeaderText(jsonData.scenes[sceneName].headerText);
+            break;
+        case scenes[6]:
+            updateHeaderText(jsonData.scenes[sceneName].headerText);
+            break;
+            
+    }
+
+    transitionHeaderColor(jsonData.scenes[sceneName].headerColor);
+
+    updateMainText(jsonData.scenes[sceneName].bodyText);
+    for (let x = 0; x < 4; x++)
+    {
+        updateButtonText(Object.values(choiceButtons)[x], jsonData.scenes[sceneName].choiceTexts[x], getTextDelay(jsonData.scenes[sceneName].bodyText, 1.0));
+    }
+    
 }
 
+function transitionHeaderColor(string)
+{
+    headerTop.style.background = string;
+    headerTop.style.transition = "background 7.25s 0s ease-out";
+}
 
+/**
+ * 
+ * @param {HTMLElement} button button element to change
+ * @param {string} newText new Text to display
+ * @param {number} delay MS to wait before beginning animation
+ */
+function updateButtonText(button, newText, delay = 0)
+{
+    setTimeout(function() {
+    animateText(button.id, newText);
+    }, delay);
+}
+
+/**
+ * 
+ * @param {string} sceneName From jsonObject of transition function
+ * @param {string} extraText Current workaround for adding player name into json string
+ */
+function updateHeaderText(newText, extraText = ""){
+    if (extraText != "")
+    {
+        animateText("titleCard", newText + ` ${extraText}.`);
+    }
+    else{
+        animateText("titleCard", newText);
+    }
+}
+
+/**
+ * 
+ * @param {string} sceneName From jsonObject of transition function
+ */
+function updateMainText(newText, extraText = ""){
+    animateText("mainParagraph", newText);
+}
+
+/**
+ * 
+ * @param {string} string 
+ * @param {number} multiplier
+ * @returns {number} MS of time that string will take to animate, modified by multiplier
+ */
+function getTextDelay(string, multiplier)
+{
+    let splitString = string.split("");
+    return (splitString.length * 50 / multiplier);
+}
+
+//#region Deprecated
+//const choiceButtonIDs = ["choiceOne", "choiceTwo", "choiceThree", "choiceFour"];
+//const optionButtonIDs = ["restartButton", "exitButton"];
