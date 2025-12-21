@@ -125,11 +125,15 @@ p{
 #leftColumn{
     /* background-color: var(--bottom-screen-background, 0.0); */
     background-color: rgba(0, 0, 0, 0.0);
-    width: 160px;
+    width: 180px;
     position: absolute;
-    left: -180px;
+    left: -200px;
     top: 20px;
     border-radius: 2rem;
+    display:flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 #rightColumn{
@@ -139,6 +143,10 @@ p{
     left: 820px;
     top: 20px;
     border-radius: 2rem;
+    display:flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 #mainParagraph{
@@ -173,6 +181,23 @@ p{
     height: 3rem;
     width: 200px;
     border-radius: 1rem;
+}
+
+.itemCard{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px black solid;
+    padding: 3px;
+    width: 160px;
+    height: 30%;
+    border-radius: 15%;
+    display: none;
+}
+
+.itemCard img{
+    width: 85%;
+    height: 85%;
 }
 
 

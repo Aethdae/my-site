@@ -72,8 +72,8 @@ async function startUp()
         setupInventory();
         setupGameStates();
     }
-
     displayBeginning();
+    doc.getElementById("Axe").hidden = false;
 }
 
 /**
@@ -171,11 +171,16 @@ function animateCardsLoad(id)
 */
 function animateSideColumn(id)
 {
+    let cards = doc.getElementsByClassName("itemCard");
+    for (let x = 0; x < 6; x++)
+    {
+        cards[x].hidden = true;
+    }
     let element = doc.getElementById(id);
 
     element.style.height = "800px";
     element.style.transition = "background-color ease-in-out 2.6s 0.0s";
-    element.style.backgroundColor = "#888888FF"
+    element.style.backgroundColor = "#888888FF";
 }
 
 /**
@@ -254,7 +259,6 @@ function animateText(id, string, multiplier = 1.0)
  */
 function buttonClicked(element)
 {
-    //gameStates: , , , , , , 
     let scenes = Object.keys(jsonData.scenes);
     let state = getCurrentGameState();
     let buttons = Object.values(choiceButtons);
@@ -277,6 +281,7 @@ function buttonClicked(element)
                         let nameString = nameEntry.value;
                         submitName(nameString);
                         transitionToScene("start");
+                        getItem("Axe");
                         break;
                     case buttons[1]:
                         let randNumber = Math.floor(Math.random() * 4);
@@ -317,19 +322,11 @@ function buttonClicked(element)
                 {
                     case buttons[0]:
                         //add axe
-                        if (!inventory.get("Axe"))
-                        {
-                            inventory.set("Axe", true);
-                            console.log(inventory.get("Axe"));
-                        }
+                        getItem("Axe");
                         element.innerHTML = "Axe grabbed";
                         break;
                     case buttons[1]:
-                        if (!inventory.get("Torch"))
-                        {
-                            inventory.set("Torch", true);
-                            console.log(inventory.get("Torch"));
-                        }
+                        getItem("Torch");
                         element.innerHTML = "Torch grabbed";
                         //add torch
                         break;
@@ -524,7 +521,7 @@ function transitionToScene(sceneName)
 function transitionHeaderColor(string)
 {
     headerTop.style.background = string;
-    headerTop.style.transition = "background 7.25s 0s ease-out";
+    headerTop.style.transition = "background 2.25s 0s ease-out";
 }
 
 /**
@@ -573,6 +570,26 @@ function getTextDelay(string, multiplier)
 {
     let splitString = string.split("");
     return (splitString.length * 50 / multiplier);
+}
+
+/**
+ * Add an item into inventory Map via string name;
+ * @param {string} itemName 
+ */
+function getItem(itemName)
+{
+    if (inventory.has(itemName))
+    {
+        if (!inventory.get(itemName))
+        {
+            inventory.set(itemName, true);
+            doc.getElementById(itemName).hidden = false;
+            console.log(doc.getElementById(itemName).hidden);
+        }
+    }
+    else{
+        console.error("Item not in map");
+    }
 }
 
 //#region Deprecated
