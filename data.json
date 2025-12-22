@@ -1,5 +1,5 @@
 {
-    "potentialItems": ["Pickaxe", "Torch", "Sword", "Axe", "Gun"],
+    "potentialItems": ["Pickaxe", "Torch", "Dagger", "Axe", "Gun"],
 
     "pregameHeaderText": [
         "Welcome adventurer.", "You will soon embark on a journey."

@@ -1,3 +1,17 @@
+//#region Comments/plans
+/*
+It may be better to do CSS animations instead of using transition/transform, although
+it has been working fine for the moment. May cause issues later, especially
+instantiating item cards if I go that route instead.
+
+Going forward I think adding additional objects to the json,
+indicating where in the scenemap to go would be a better idea
+than hard-coding it in the transitions, that way it's more
+expandable in case more things get added/replaced/reorganized
+
+Add the restart and exit button to disabled and enabled.
+*/
+//#endregion
 
 //#endregion
 
@@ -73,7 +87,6 @@ async function startUp()
         setupGameStates();
     }
     displayBeginning();
-    doc.getElementById("Axe").hidden = false;
 }
 
 /**
@@ -89,7 +102,7 @@ function assignButtons()
         button.addEventListener("click", () => buttonClicked(button));
 
         //option to disable buttons at certain points, currently always active
-        button.dataset.active = true;
+        button.setAttribute("active", "false");
     });
     oButtons.forEach((button) => {
         button.addEventListener("click", () => resourceButtonClicked(button));
@@ -171,11 +184,6 @@ function animateCardsLoad(id)
 */
 function animateSideColumn(id)
 {
-    let cards = doc.getElementsByClassName("itemCard");
-    for (let x = 0; x < 6; x++)
-    {
-        cards[x].hidden = true;
-    }
     let element = doc.getElementById(id);
 
     element.style.height = "800px";
@@ -205,10 +213,6 @@ function displayBeginning()
  */
 function showNameEntry()
 {
-    console.log("Showing name");
-
-    //nameEntry.hidden = false;
-    
     mainParagraph.style.textAlign = "center";
     mainParagraph.style.fontSize = "4rem";
     textEntryHolder.hidden = false;
@@ -241,7 +245,6 @@ function submitName(nameString)
  */
 function animateText(id, string, multiplier = 1.0)
 {
-    console.log("Text is animating.")
     let element = document.getElementById(id);
     element.innerHTML = "";
     let splitString = string.split("");
@@ -263,12 +266,7 @@ function buttonClicked(element)
     let state = getCurrentGameState();
     let buttons = Object.values(choiceButtons);
 
-    //why is it a string =(
-    console.log(typeof(element.dataset.active));
-
-
-    //option to disable buttons at certain points, currently always active
-    if (element.dataset.active == "true")
+    if (element.getAttribute("active") === "true")
     {
         switch (state)
         {
@@ -281,7 +279,6 @@ function buttonClicked(element)
                         let nameString = nameEntry.value;
                         submitName(nameString);
                         transitionToScene("start");
-                        getItem("Axe");
                         break;
                     case buttons[1]:
                         let randNumber = Math.floor(Math.random() * 4);
@@ -303,6 +300,7 @@ function buttonClicked(element)
                 {
                     case buttons[0]:
                         transitionToScene("explore");
+                        console.log(`${element.dataset.active} should be true`);
                         break;
                     case buttons[1]:
                         transitionToScene("mountain");
@@ -474,11 +472,11 @@ function setGameState(newState){
  */
 function transitionToScene(sceneName)
 {
-    for (let x = 0; x < 4; x++)
-    {
-        updateButtonText(Object.values(choiceButtons)[x], "", 0);
-    }
+    clearButtons();
+    lockButtons();
+
     let scenes = Object.keys(jsonData.scenes);
+    
     setGameState(jsonData.scenes[sceneName].state);
 
     //additional required logic per scene, i.e. animations, color change, etc.
@@ -513,9 +511,28 @@ function transitionToScene(sceneName)
     updateMainText(jsonData.scenes[sceneName].bodyText);
     for (let x = 0; x < 4; x++)
     {
-        updateButtonText(Object.values(choiceButtons)[x], jsonData.scenes[sceneName].choiceTexts[x], getTextDelay(jsonData.scenes[sceneName].bodyText, 1.0));
+        updateButtonText(Object.values(choiceButtons)[x], 
+        jsonData.scenes[sceneName].choiceTexts[x], 
+        getTextDelay(jsonData.scenes[sceneName].bodyText, 1.0));
     }
     
+}
+
+function lockButtons()
+{
+    for (let x = 0; x < 4; x++)
+    {
+        Object.values(choiceButtons)[x].setAttribute("active", "false");
+    }
+}
+
+function clearButtons()
+{
+    let buttons = Object.values(choiceButtons);
+    for (let x = 0; x < buttons.length; x++)
+    {
+        buttons[x].innerHTML = "";
+    }
 }
 
 function transitionHeaderColor(string)
@@ -532,11 +549,17 @@ function transitionHeaderColor(string)
  */
 function updateButtonText(button, newText, delay = 0)
 {
-    setTimeout(function() {
-    animateText(button.id, newText);
+    setTimeout(function() 
+    {
+        animateText(button.id, newText);
+        activateButton(button.id);
     }, delay);
 }
 
+function activateButton(id)
+{
+    doc.getElementById(id).setAttribute("active", "true");
+}
 /**
  * 
  * @param {string} sceneName From jsonObject of transition function
@@ -583,8 +606,12 @@ function getItem(itemName)
         if (!inventory.get(itemName))
         {
             inventory.set(itemName, true);
-            doc.getElementById(itemName).hidden = false;
-            console.log(doc.getElementById(itemName).hidden);
+            createItemCard(itemName);
+
+            //implemented
+            //maybe instead of display block add a way to add a whole card from js instead? 
+            // not hardcoded that way and allows more flexible inventory
+            //doc.getElementById(itemName).style.display = "block";
         }
     }
     else{
@@ -592,6 +619,30 @@ function getItem(itemName)
     }
 }
 
+function createItemCard(itemName){
+
+    let newDiv = doc.createElement("div");
+    newDiv.className = "itemCard";
+    newDiv.id = itemName;
+    let newImg = doc.createElement("img");
+    newImg.alt = `pixel art of a ${itemName}`;
+    newImg.src = `./images/${itemName}.png`
+
+    newDiv.appendChild(newImg);
+    if (leftColumn.children.length < 3)
+    {
+        leftColumn.appendChild(newDiv);
+    }
+    else if (rightColumn.children.length < 3)
+    {
+        rightColumn.appendChild(newDiv);
+    }
+    else{
+        console.error(`Too many items for inventory due to ${itemName}. How did this happen?`);
+    }
+}
+
 //#region Deprecated
 //const choiceButtonIDs = ["choiceOne", "choiceTwo", "choiceThree", "choiceFour"];
 //const optionButtonIDs = ["restartButton", "exitButton"];
+//#endregion

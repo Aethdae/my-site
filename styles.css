@@ -192,12 +192,11 @@ p{
     width: 160px;
     height: 30%;
     border-radius: 15%;
-    display: none;
 }
 
 .itemCard img{
-    width: 85%;
-    height: 85%;
+    width: 100%;
+    height: auto;
 }
 
 
