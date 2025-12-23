@@ -11,7 +11,8 @@
             "choiceTexts": ["Submit.", "Random Name!", "", ""], 
             "headerText": "For now, what is your name?",
             "headerColor": "linear-gradient(.25turn, white, #777, white)",
-            "delay": 2000
+            "delay": 2000,
+            "toScene": ["start", "start"]
         },
         "start": {
             "state": "start",
@@ -19,42 +20,57 @@
             "choiceTexts": ["Explore the area.", "Approach the mountain.", "", ""], 
             "headerText": "Welcome",
             "headerColor": "linear-gradient(.25turn, black, #222, black)",
-            "delay": 8000
+            "delay": 8000,
+            "toScene": ["explore", "mountain"]
         },
         
         "explore": { 
             "state": "explore",
-            "bodyText": "",
+            "bodyText": "Looking around the area, some old tools can be found near an abandoned backpack. A makeshift, worn axe, and a piece of dry cloth wrapped around a large stick making a torch. Which of these would you like to take? Seems that both would be handy to have.",
             "choiceTexts": ["Take the axe.", "Take the torch.", "Return to start.", ""], 
             "headerText": "Exploring the area..." ,
             "headerColor": "#B82500",
-            "delay": 4000
+            "delay": 4000,
+            "toScene": ["", "", "startReturn"]
         },
 
         "mountain":{
             "state": "mountain",
-            "bodyText": "",
-            "choiceTexts": ["", "", "", ""], 
+            "bodyText": "You move towards the mountain, heading towards the carriages and carts that seem to be coming to a stop in a large line. After briefly asking what's going on and being met with confusion, you hear a small cry out for help from up ahead.",
+            "choiceTexts": ["Quickly move to help the person.", "Stay a bit back, just out of sight.", "", ""], 
             "headerText": "You approach the mountain...",
-            "headerColor": "#",
-            "delay": 4000
+            "headerColor": "#B82500",
+            "delay": 4000,
+            "toScene": ["fightOne", "stealthFight"]
         },
         "startReturn": {
             "state": "startReturn",
-            "bodyText": "You return to the starting area, ready to approach the mountain",  
+            "bodyText": "You return to the starting area, ready to approach the mountain. The carts that flowed freely before appear to have started a line.",  
             "choiceTexts": ["Approach the mountain.", "", "", ""], 
             "headerText": "Ready to approach the mountain...",
             "headerColor": "linear-gradient(.25turn, #B42D31, #B82500, #B42D31)",
-            "delay": 8000
+            "delay": 8000,
+            "toScene": ["mountain"]
         },
 
         "fightOne": {
             "state": "fightOne",
+            "bodyText": "A bandit is holding up one of the carts, dagger drawn and ready to attack. You step in to intervene, using whatever you have to fight back.",
+            "choiceTexts": ["Grab a rock and strike.", "Use the axe to swing at him.", "Swing the torch as a deterrant.", ""],
+            "headerText": "",
+            "headerColor": "rgb(80, 20, 20)",
+            "delay": 4000,
+            "toScene": ["", "", ""]
+        },
+
+        "stealthFight": {
+            "state": "stealthFight",
             "bodyText": "",
             "choiceTexts": ["", "", "", ""],
             "headerText": "",
-            "headerColor": "rgb(80, 20, 20)",
-            "delay": 4000
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["start", "start"]
         },
 
         "bossFight": {
@@ -63,7 +79,8 @@
             "choiceTexts": ["", "", "", ""],
             "headerText": "",
             "headerColor": "rgb(30, 30, 30)",
-            "delay": 4000
+            "delay": 4000,
+            "toScene": ["start", "start"]
         }
     }
 }

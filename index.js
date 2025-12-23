@@ -262,7 +262,7 @@ function animateText(id, string, multiplier = 1.0)
  */
 function buttonClicked(element)
 {
-    let scenes = Object.keys(jsonData.scenes);
+    let scenes = Object.values(jsonData.scenes);
     let state = getCurrentGameState();
     let buttons = Object.values(choiceButtons);
 
@@ -278,12 +278,12 @@ function buttonClicked(element)
                     case buttons[0]:
                         let nameString = nameEntry.value;
                         submitName(nameString);
-                        transitionToScene("start");
+                        transitionToScene(jsonData.scenes[gameStates[0]].toScene[0]);
                         break;
                     case buttons[1]:
                         let randNumber = Math.floor(Math.random() * 4);
                         submitName(randomNames[randNumber]);
-                        transitionToScene("start");
+                        transitionToScene(jsonData.scenes[gameStates[0]].toScene[1]);
                         break;
                     case buttons[2]:
                         break;
@@ -299,11 +299,10 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene("explore");
-                        console.log(`${element.dataset.active} should be true`);
+                        transitionToScene(jsonData.scenes[gameStates[1]].toScene[0])
                         break;
                     case buttons[1]:
-                        transitionToScene("mountain");
+                        transitionToScene(jsonData.scenes[gameStates[1]].toScene[1]);
                         break;
                     case buttons[2]:
                         break;
@@ -329,7 +328,7 @@ function buttonClicked(element)
                         //add torch
                         break;
                     case buttons[2]:
-                        transitionToScene("startReturn");
+                        transitionToScene(jsonData.scenes[gameStates[2]].toScene[2])
                         break;
                     case buttons[3]:
                         break;
@@ -343,8 +342,10 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
+                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[0])
                         break;
                     case buttons[1]:
+                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[1])
                         break;
                     case buttons[2]:
                         break;
@@ -360,7 +361,7 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene("mountain");
+                        transitionToScene(jsonData.scenes[gameStates[4]].toScene[0])
                         break;
                     case buttons[1]:
                         break;
@@ -378,8 +379,30 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
+                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[0])
                         break;
                     case buttons[1]:
+                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[1])
+                        break;
+                    case buttons[2]:
+                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[2])
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            
+            //stealhFight
+            case gameStates[6]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[0])
+                        break;
+                    case buttons[1]:
+                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[1])
                         break;
                     case buttons[2]:
                         break;
@@ -390,7 +413,7 @@ function buttonClicked(element)
             break;
 
             //bossFight
-            case gameStates[6]:
+            case gameStates[7]:
             {
                 switch (element)
                 {
