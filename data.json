@@ -12,7 +12,7 @@
             "headerText": "For now, what is your name?",
             "headerColor": "linear-gradient(.25turn, white, #777, white)",
             "delay": 2000,
-            "toScene": ["start", "start"]
+            "toScene": ["start", "start", "", ""]
         },
         "start": {
             "state": "start",
@@ -21,7 +21,7 @@
             "headerText": "Welcome",
             "headerColor": "linear-gradient(.25turn, black, #222, black)",
             "delay": 8000,
-            "toScene": ["explore", "mountain"]
+            "toScene": ["explore", "mountain", "", ""]
         },
         
         "explore": { 
@@ -31,7 +31,7 @@
             "headerText": "Exploring the area..." ,
             "headerColor": "#B82500",
             "delay": 4000,
-            "toScene": ["", "", "startReturn"]
+            "toScene": ["", "", "startReturn", "", ""]
         },
 
         "mountain":{
@@ -41,7 +41,7 @@
             "headerText": "You approach the mountain...",
             "headerColor": "#B82500",
             "delay": 4000,
-            "toScene": ["fightOne", "stealthFight"]
+            "toScene": ["fightOne", "stealthFight", "", ""]
         },
         "startReturn": {
             "state": "startReturn",
@@ -50,27 +50,54 @@
             "headerText": "Ready to approach the mountain...",
             "headerColor": "linear-gradient(.25turn, #B42D31, #B82500, #B42D31)",
             "delay": 8000,
-            "toScene": ["mountain"]
+            "toScene": ["mountain", "", "", ""]
         },
 
         "fightOne": {
             "state": "fightOne",
             "bodyText": "A bandit is holding up one of the carts, dagger drawn and ready to attack. You step in to intervene, using whatever you have to fight back.",
-            "choiceTexts": ["Grab a rock and strike.", "Use the axe to swing at him.", "Swing the torch as a deterrant.", ""],
-            "headerText": "",
+            "choiceTexts": ["Grab a rock and strike.", "Use the axe to swing at him.", "Swing the torch as a deterrent.", ""],
+            "headerText": "A fight breaks out!",
             "headerColor": "rgb(80, 20, 20)",
             "delay": 4000,
-            "toScene": ["", "", ""]
+            "toScene": ["fightFailure", "fightSuccess", "fightSuccess", ""]
         },
-
+        
         "stealthFight": {
             "state": "stealthFight",
+            "bodyText": "You opt to slowly approach instead, causing your actions to be harder to detect. ",
+            "choiceTexts": ["Grab a rock and strike.", "Use the axe to swing at him.", "Swing the torch as a deterrent.", "Grab his dagger and use it against him."],
+            "headerText": "Quietly, quietly...",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["fightSuccess", "fightSuccess", "fightSuccess", "daggerSuccess"]
+        },
+        "fightSuccess": {
+            "state": "fightSuccess",
             "bodyText": "",
             "choiceTexts": ["", "", "", ""],
             "headerText": "",
             "headerColor": "rgb(30, 30, 30)",
             "delay": 4000,
-            "toScene": ["start", "start"]
+            "toScene": ["", "", "", ""]
+        },
+        "fightFailure": {
+            "state": "fightFailure",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["", "", "", ""]
+        },
+        "daggerSuccess": {
+            "state": "daggerSuccess",
+            "bodyText": "Quickly grabbing and then using his own blade against him, you quietly take the bandit down. Wiping off the blade, you add it to your gear as well.",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["", "", "", ""]
         },
 
         "bossFight": {
@@ -80,7 +107,7 @@
             "headerText": "",
             "headerColor": "rgb(30, 30, 30)",
             "delay": 4000,
-            "toScene": ["start", "start"]
+            "toScene": ["", "", "", ""]
         }
     }
 }

@@ -199,5 +199,21 @@ p{
     height: auto;
 }
 
+.axeReq:hover:after{
+    content: "           Axe Required!";
+    white-space: pre;
+    color: white;
+    font-size: .8rem;
+    text-shadow: 1px 1px 2px black;
+    font-style: italic;
+}
 
+.torchReq:hover:after{
+    content: "           Torch Required!";
+    white-space: pre;
+    color: white;
+    font-size: .8rem;
+    text-shadow: 1px 1px 2px black;
+    font-style: italic;
+}
 

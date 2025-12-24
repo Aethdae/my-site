@@ -286,8 +286,10 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[0]].toScene[1]);
                         break;
                     case buttons[2]:
+                        transitionToScene(jsonData.scenes[gameStates[0]].toScene[2]);
                         break;
                     case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[0]].toScene[3]);
                         break;
                 }
             }
@@ -305,8 +307,10 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[1]].toScene[1]);
                         break;
                     case buttons[2]:
+                        transitionToScene(jsonData.scenes[gameStates[1]].toScene[2]);
                         break;
                     case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[1]].toScene[3]);
                         break;
                 }
             }
@@ -321,16 +325,19 @@ function buttonClicked(element)
                         //add axe
                         getItem("Axe");
                         element.innerHTML = "Axe grabbed";
+                        transitionToScene(jsonData.scenes[gameStates[2]].toScene[0]);
                         break;
                     case buttons[1]:
                         getItem("Torch");
                         element.innerHTML = "Torch grabbed";
+                        transitionToScene(jsonData.scenes[gameStates[2]].toScene[1]);
                         //add torch
                         break;
                     case buttons[2]:
-                        transitionToScene(jsonData.scenes[gameStates[2]].toScene[2])
+                        transitionToScene(jsonData.scenes[gameStates[2]].toScene[2]);
                         break;
                     case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[2]].toScene[3]);
                         break;
                 }
             }
@@ -342,14 +349,16 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[0])
+                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[0]);
                         break;
                     case buttons[1]:
-                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[1])
+                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[1]);
                         break;
                     case buttons[2]:
+                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[2]);
                         break;
                     case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[3]].toScene[3]);
                         break;
                 }
             }
@@ -361,13 +370,16 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene(jsonData.scenes[gameStates[4]].toScene[0])
+                        transitionToScene(jsonData.scenes[gameStates[4]].toScene[0]);
                         break;
                     case buttons[1]:
+                        transitionToScene(jsonData.scenes[gameStates[4]].toScene[1]);
                         break;
                     case buttons[2]:
+                        transitionToScene(jsonData.scenes[gameStates[4]].toScene[2]);
                         break;
                     case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[4]].toScene[3]);
                         break;
                 }
             }
@@ -379,15 +391,30 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[0])
+                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[0]);
                         break;
                     case buttons[1]:
-                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[1])
+                        if (inventory.get("Axe"))
+                        {
+                            transitionToScene(jsonData.scenes[gameStates[5]].toScene[1]);
+                            removeItem("Axe");
+                        }
+                        else{
+                            console.warn("Axe not in inventory.");
+                        }
                         break;
                     case buttons[2]:
-                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[2])
+                        if (inventory.get("Torch"))
+                        {
+                            removeItem("Torch");
+                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[2]);
+                        }
+                        else{
+                            console.warn("Torch not in inventory.");
+                        }
                         break;
                     case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[5]].toScene[3]);
                         break;
                 }
             }
@@ -399,14 +426,16 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[0])
+                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[0]);
                         break;
                     case buttons[1]:
-                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[1])
+                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[1]);
                         break;
                     case buttons[2]:
+                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[2]);
                         break;
                     case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[6]].toScene[3]);
                         break;
                 }
             }
@@ -495,50 +524,81 @@ function setGameState(newState){
  */
 function transitionToScene(sceneName)
 {
-    clearButtons();
-    lockButtons();
-
-    let scenes = Object.keys(jsonData.scenes);
-    
-    setGameState(jsonData.scenes[sceneName].state);
-
-    //additional required logic per scene, i.e. animations, color change, etc.
-    switch (sceneName)
+    //scenes "": "":"":"": "":"": "":
+    //"":"":"":"bossFight":
+    if (sceneName != "")
     {
-        case scenes[0]:
-            updateHeaderText(jsonData.scenes[sceneName].headerText);
-            break;
-        case scenes[1]:
-            updateHeaderText(jsonData.scenes[sceneName].headerText, playerName);
-            break;
-        case scenes[2]:
-            updateHeaderText(jsonData.scenes[sceneName].headerText);
-            break;
-        case scenes[3]:
-            updateHeaderText(jsonData.scenes[sceneName].headerText);
-            break;
-        case scenes[4]:
-            updateHeaderText(jsonData.scenes[sceneName].headerText);
-            break;
-        case scenes[5]:
-            updateHeaderText(jsonData.scenes[sceneName].headerText);
-            break;
-        case scenes[6]:
-            updateHeaderText(jsonData.scenes[sceneName].headerText);
-            break;
-            
-    }
+        clearButtons();
+        lockButtons();
 
-    transitionHeaderColor(jsonData.scenes[sceneName].headerColor);
+        let scenes = Object.keys(jsonData.scenes);
+        
+        setGameState(jsonData.scenes[sceneName].state);
 
-    updateMainText(jsonData.scenes[sceneName].bodyText);
-    for (let x = 0; x < 4; x++)
-    {
-        updateButtonText(Object.values(choiceButtons)[x], 
-        jsonData.scenes[sceneName].choiceTexts[x], 
-        getTextDelay(jsonData.scenes[sceneName].bodyText, 1.0));
+        //additional required logic per scene, i.e. animations, color change, etc.
+        switch (sceneName)
+        {
+            //beginning
+            case scenes[0]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //start
+            case scenes[1]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText, playerName);
+                break;
+            //explore
+            case scenes[2]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //mountain
+            case scenes[3]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //startReturn
+            case scenes[4]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //fightOne
+            case scenes[5]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " axeReq";
+                choiceThree.className += " torchReq";
+                break;
+            //stealthFight
+            case scenes[6]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " axeReq";
+                choiceThree.className += " torchReq";
+                break;
+            //fightSuccess
+            case scenes[7]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //fightFailure
+            case scenes[8]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //daggerSuccess
+            case scenes[9]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //bossFight
+            case scenes[10]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+                
+        }
+
+        transitionHeaderColor(jsonData.scenes[sceneName].headerColor);
+
+        updateMainText(jsonData.scenes[sceneName].bodyText);
+        for (let x = 0; x < 4; x++)
+        {
+            updateButtonText(Object.values(choiceButtons)[x], 
+            jsonData.scenes[sceneName].choiceTexts[x], 
+            getTextDelay(jsonData.scenes[sceneName].bodyText, 1.0));
+        }
     }
-    
 }
 
 function lockButtons()
@@ -554,6 +614,8 @@ function clearButtons()
     let buttons = Object.values(choiceButtons);
     for (let x = 0; x < buttons.length; x++)
     {
+
+        buttons[x].className = " choiceCard initCard";
         buttons[x].innerHTML = "";
     }
 }
@@ -640,6 +702,16 @@ function getItem(itemName)
     else{
         console.error("Item not in map");
     }
+}
+
+function removeItem(itemName)
+{
+    inventory.set(itemName, false);
+    removeItemCard(itemName);
+}
+function removeItemCard(itemName)
+{
+    doc.getElementById(itemName).remove();
 }
 
 function createItemCard(itemName){
