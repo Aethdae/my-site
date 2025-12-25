@@ -31,7 +31,7 @@
             "headerText": "Exploring the area..." ,
             "headerColor": "#B82500",
             "delay": 4000,
-            "toScene": ["", "", "startReturn", "", ""]
+            "toScene": ["", "", "startReturn", ""]
         },
 
         "mountain":{
@@ -60,7 +60,7 @@
             "headerText": "A fight breaks out!",
             "headerColor": "rgb(80, 20, 20)",
             "delay": 4000,
-            "toScene": ["fightFailure", "fightSuccess", "fightSuccess", ""]
+            "toScene": ["fightFailure", "fightSuccessAxe", "fightSuccessTorch", ""]
         },
         
         "stealthFight": {
@@ -70,10 +70,28 @@
             "headerText": "Quietly, quietly...",
             "headerColor": "rgb(30, 30, 30)",
             "delay": 4000,
-            "toScene": ["fightSuccess", "fightSuccess", "fightSuccess", "daggerSuccess"]
+            "toScene": ["fightSuccessRock", "fightSuccessAxe", "fightSuccessTorch", "daggerSuccess"]
         },
-        "fightSuccess": {
-            "state": "fightSuccess",
+        "fightSuccessRock": {
+            "state": "fightSuccessRock",
+            "bodyText": "Moving quietly, you approach as the bandit makes their demands toward the cart driver. 'Hand over all your goods and there won't be any trouble', he utters with a sly grin. Quickly grabbing a rock nearby, you burst out during his dialogue and catch him fully of guard. You quickly strike and bring him down, the rock sputtering in the dirt road beside you. A few onlookers quickly leap to the bandit, and take his gear instead, an ironic end to a ne'er-do-well. A large, muscular Orc approaches you, large two-handed weapon drawn. 'Not bad taking down the newbie', he starts, looking over the unconscious bandit with a look of disdain. He turns his attention to you, stating, 'You brought him down quick, les'see if you can take me too.'",
+            "choiceTexts": ["Grab the rock again!", "Move to use the axe.", "Use the torch offensively.", "Run away!"],
+            "headerText": "Surprised!",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["bossFightLoss", "bossFightAxe", "bossFightTorch", "bossFightLoss"]
+        },
+        "fightSuccessAxe": {
+            "state": "fightSuccessAxe",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["", "", "", ""]
+        },
+        "fightSuccessTorch": {
+            "state": "fightSuccessTorch",
             "bodyText": "",
             "choiceTexts": ["", "", "", ""],
             "headerText": "",
@@ -100,8 +118,38 @@
             "toScene": ["", "", "", ""]
         },
 
-        "bossFight": {
-            "state": "bossFight",
+        "bossFightLoss": {
+            "state": "bossFightLoss",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["", "", "", ""]
+        },
+
+        "bossFightAxe": {
+            "state": "bossFightAxe",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["", "", "", ""]
+        },
+
+        "bossFightTorch": {
+            "state": "bossFightTorch",
+            "bodyText": "",
+            "choiceTexts": ["", "", "", ""],
+            "headerText": "",
+            "headerColor": "rgb(30, 30, 30)",
+            "delay": 4000,
+            "toScene": ["", "", "", ""]
+        },
+
+        "bossFightDagger": {
+            "state": "bossFightDagger",
             "bodyText": "",
             "choiceTexts": ["", "", "", ""],
             "headerText": "",

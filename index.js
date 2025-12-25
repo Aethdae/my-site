@@ -420,7 +420,7 @@ function buttonClicked(element)
             }
             break;
             
-            //stealhFight
+            //stealthFight
             case gameStates[6]:
             {
                 switch (element)
@@ -440,9 +440,137 @@ function buttonClicked(element)
                 }
             }
             break;
-
-            //bossFight
+            //,fightSuccessRock, ,,
+            
             case gameStates[7]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //fightSuccessAxe
+            case gameStates[8]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //fightSuccessTorch
+            case gameStates[9]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //fightFailure
+            case gameStates[10]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //daggerSuccess
+            case gameStates[11]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //bossFightLoss
+            case gameStates[12]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //bossFightAxe
+            case gameStates[13]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //bossFightTorch
+            case gameStates[14]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        break;
+                    case buttons[1]:
+                        break;
+                    case buttons[2]:
+                        break;
+                    case buttons[3]:
+                        break;
+                }
+            }
+            break;
+            //bossFightDagger
+            case gameStates[15]:
             {
                 switch (element)
                 {
@@ -524,8 +652,6 @@ function setGameState(newState){
  */
 function transitionToScene(sceneName)
 {
-    //scenes "": "":"":"": "":"": "":
-    //"":"":"":"bossFight":
     if (sceneName != "")
     {
         clearButtons();
@@ -570,22 +696,33 @@ function transitionToScene(sceneName)
                 choiceTwo.className += " axeReq";
                 choiceThree.className += " torchReq";
                 break;
-            //fightSuccess
+            //fightSuccessRock
             case scenes[7]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
                 break;
-            //fightFailure
+            //fightSuccaxe
             case scenes[8]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
                 break;
-            //daggerSuccess
+            //fightSucctorch
             case scenes[9]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
                 break;
-            //bossFight
+            //fightFailure
             case scenes[10]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
                 break;
+            //daggerSuccess
+            case scenes[11]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            case scenes[12]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            case scenes[13]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
+            //bossFight
                 
         }
 
