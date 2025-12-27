@@ -1,5 +1,9 @@
 //#region Comments/plans
 /*
+#TODO: Add in cookie/local storage support for loading from last scene. 
+Should be as simple as saving from click, and reloading that scene and inventory?
+Never say it'll be simple though. 
+
 It may be better to do CSS animations instead of using transition/transform, although
 it has been working fine for the moment. May cause issues later, especially
 instantiating item cards if I go that route instead.
@@ -64,7 +68,6 @@ startUp();
 
 /**
  * Launch to initialize state and animations
- * TODO: Add loading from cookies? JS? Json? LocalFile?
  */
 async function startUp()
 {
