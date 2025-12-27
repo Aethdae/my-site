@@ -328,12 +328,12 @@ function buttonClicked(element)
                 {
                     case buttons[0]:
                         //add axe
-                        getItem("Axe");
+                        getItem("axe");
                         element.innerHTML = "Axe grabbed";
                         transitionToScene(jsonData.scenes[gameStates[2]].toScene[0]);
                         break;
                     case buttons[1]:
-                        getItem("Torch");
+                        getItem("torch");
                         element.innerHTML = "Torch grabbed";
                         transitionToScene(jsonData.scenes[gameStates[2]].toScene[1]);
                         //add torch
@@ -399,19 +399,19 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[5]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Axe"))
+                        if (inventory.get("axe"))
                         {
                             transitionToScene(jsonData.scenes[gameStates[5]].toScene[1]);
-                            removeItem("Axe");
+                            removeItem("axe");
                         }
                         else{
                             console.warn("Axe not in inventory.");
                         }
                         break;
                     case buttons[2]:
-                        if (inventory.get("Torch"))
+                        if (inventory.get("torch"))
                         {
-                            removeItem("Torch");
+                            removeItem("torch");
                         transitionToScene(jsonData.scenes[gameStates[5]].toScene[2]);
                         }
                         else{
@@ -434,19 +434,19 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[6]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Axe"))
+                        if (inventory.get("axe"))
                         {
                             transitionToScene(jsonData.scenes[gameStates[6]].toScene[1]);
-                            removeItem("Axe");
+                            removeItem("axe");
                         }
                         else{
                             console.warn("Axe not in inventory.");
                         }
                         break;
                     case buttons[2]:
-                        if (inventory.get("Torch"))
+                        if (inventory.get("torch"))
                         {
-                            removeItem("Torch");
+                            removeItem("torch");
                             transitionToScene(jsonData.scenes[gameStates[6]].toScene[2]);
                         }
                         else{
@@ -454,7 +454,7 @@ function buttonClicked(element)
                         }
                         break;
                     case buttons[3]:
-                        getItem("Dagger");
+                        getItem("dagger");
                         transitionToScene(jsonData.scenes[gameStates[6]].toScene[3]);
                         break;
                 }
@@ -470,19 +470,19 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[7]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Axe"))
+                        if (inventory.get("axe"))
                         {
                             transitionToScene(jsonData.scenes[gameStates[7]].toScene[1]);
-                            removeItem("Axe");
+                            removeItem("axe");
                         }
                         else{
                             console.warn("Axe not in inventory.");
                         }
                         break;
                     case buttons[2]:
-                        if (inventory.get("Torch"))
+                        if (inventory.get("torch"))
                         {
-                            removeItem("Torch");
+                            removeItem("torch");
                             transitionToScene(jsonData.scenes[gameStates[7]].toScene[2]);
                         }
                         else{
@@ -505,9 +505,9 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[8]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Torch"))
+                        if (inventory.get("torch"))
                         {
-                            removeItem("Torch");
+                            removeItem("torch");
                             transitionToScene(jsonData.scenes[gameStates[8]].toScene[1]);
                         }
                         else{
@@ -533,10 +533,10 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[9]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Axe"))
+                        if (inventory.get("axe"))
                         {
                             transitionToScene(jsonData.scenes[gameStates[9]].toScene[1]);
-                            removeItem("Axe");
+                            removeItem("axe");
                         }
                         else{
                             console.warn("Axe not in inventory.");
@@ -579,27 +579,27 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[11]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Axe"))
+                        if (inventory.get("axe"))
                         {
                             transitionToScene(jsonData.scenes[gameStates[11]].toScene[1]);
-                            removeItem("Axe");
+                            removeItem("axe");
                         }
                         else{
                             console.warn("Axe not in inventory.");
                         }
                         break;
                     case buttons[2]:
-                        if (inventory.get("Torch"))
+                        if (inventory.get("torch"))
                         {
-                            removeItem("Torch");
+                            removeItem("torch");
                             transitionToScene(jsonData.scenes[gameStates[11]].toScene[2]);
                         }
                         else{
-                            console.warn("Torch not in inventory.");
+                            console.warn("torch not in inventory.");
                         }
                         break;
                     case buttons[3]:
-                        if (inventory.get("Dagger"))
+                        if (inventory.get("dagger"))
                         {
                             transitionToScene(jsonData.scenes[gameStates[11]].toScene[3]);
                         }
@@ -638,19 +638,19 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[13]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Torch"))
+                        if (inventory.get("torch"))
                         {
                             transitionToScene(jsonData.scenes[gameStates[13]].toScene[1]);
-                            removeItem("Torch");
+                            removeItem("torch");
                         }
                         break;
                     case buttons[2]:
                         transitionToScene(jsonData.scenes[gameStates[13]].toScene[2]);
                         break;
                     case buttons[3]:
-                        if (inventory.get("Dagger"))
+                        if (inventory.get("dagger"))
                         {
-                            removeItem("Dagger");
+                            removeItem("dagger");
                             transitionToScene(jsonData.scenes[gameStates[13]].toScene[3]);
                         }
                         break;
@@ -673,9 +673,9 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[14]].toScene[2]);
                         break;
                     case buttons[3]:
-                        if (inventory.get("Dagger"))
+                        if (inventory.get("dagger"))
                         {
-                            removeItem("Dagger");
+                            removeItem("dagger");
                             transitionToScene(jsonData.scenes[gameStates[14]].toScene[3]);
                         }
                         break;
@@ -689,23 +689,23 @@ function buttonClicked(element)
                 switch (element)
                 {
                     case buttons[0]:
-                        if (inventory.get("Dagger"))
+                        if (inventory.get("dagger"))
                         {
-                            removeItem("Dagger");
+                            removeItem("dagger");
                             transitionToScene(jsonData.scenes[gameStates[15]].toScene[0]);
                         }
                         break;
                     case buttons[1]:
-                        if (inventory.get("Dagger"))
+                        if (inventory.get("dagger"))
                         {
-                            removeItem("Dagger");
+                            removeItem("dagger");
                             transitionToScene(jsonData.scenes[gameStates[15]].toScene[1]);
                         }
                         break;
                     case buttons[2]:
-                        if (inventory.get("Axe"))
+                        if (inventory.get("axe"))
                         {
-                            removeItem("Axe");
+                            removeItem("axe");
                             transitionToScene(jsonData.scenes[gameStates[15]].toScene[2]);
                         }
                         break;
@@ -725,23 +725,23 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[16]].toScene[0]);
                         break;
                     case buttons[1]:
-                        if (inventory.get("Dagger"))
+                        if (inventory.get("dagger"))
                         {
-                            removeItem("Dagger");
+                            removeItem("dagger");
                             transitionToScene(jsonData.scenes[gameStates[16]].toScene[1]);
                         }
                         break;
                     case buttons[2]:
-                        if (inventory.get("Torch"))
+                        if (inventory.get("torch"))
                         {
-                            removeItem("Torch");
+                            removeItem("torch");
                             transitionToScene(jsonData.scenes[gameStates[16]].toScene[2]);
                         }
                         break;
                     case buttons[3]:
-                        if (inventory.get("Axe"))
+                        if (inventory.get("axe"))
                         {
-                            removeItem("Axe");
+                            removeItem("axe");
                             transitionToScene(jsonData.scenes[gameStates[16]].toScene[3]);
                         }
                         break;
