@@ -1083,7 +1083,7 @@ function createItemCard(itemName){
     newDiv.id = itemName;
     let newImg = doc.createElement("img");
     newImg.alt = `pixel art of a ${itemName}`;
-    newImg.src = `./images/${itemName}.png`
+    newImg.src = `./images/${itemName.toLowerCase()}.png`
 
     newDiv.appendChild(newImg);
     if (leftColumn.children.length < 3)
