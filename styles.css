@@ -23,7 +23,7 @@ p{
     min-width: 1080px;
     color: white;
     font-size: 2rem;
-    background: linear-gradient(.25turn, black, #BBB, black);
+    background: linear-gradient(.25turn, black, #222, black);
     text-align: center;
 }
 #body{
@@ -210,6 +210,15 @@ p{
 
 .torchReq:hover:after{
     content: "           Torch Required!";
+    white-space: pre;
+    color: white;
+    font-size: .8rem;
+    text-shadow: 1px 1px 2px black;
+    font-style: italic;
+}
+
+.daggerReq:hover:after{
+    content: "           Dagger Required!";
     white-space: pre;
     color: white;
     font-size: .8rem;

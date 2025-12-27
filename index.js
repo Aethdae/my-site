@@ -9,7 +9,9 @@ indicating where in the scenemap to go would be a better idea
 than hard-coding it in the transitions, that way it's more
 expandable in case more things get added/replaced/reorganized
 
-Add the restart and exit button to disabled and enabled.
+It likely would also be better to migrate parts of this to different files
+i.e. inventory for dealing with items, story/main for dealing with scenes,
+UI for buttons/actions, etc Not necessary for this particular app, but useful for later.
 */
 //#endregion
 
@@ -455,8 +457,8 @@ function buttonClicked(element)
                 }
             }
             break;
-            //,fightSuccessRock, ,,
-            
+
+            //fightSuccessRock
             case gameStates[7]:
             {
                 switch (element)
@@ -490,6 +492,7 @@ function buttonClicked(element)
                 }
             }
             break;
+
             //fightSuccessAxe
             case gameStates[8]:
             {
@@ -502,7 +505,7 @@ function buttonClicked(element)
                         if (inventory.get("Torch"))
                         {
                             removeItem("Torch");
-                            transitionToScene(jsonData.scenes[gameStates[8]].toScene[2]);
+                            transitionToScene(jsonData.scenes[gameStates[8]].toScene[1]);
                         }
                         else{
                             console.warn("Torch not in inventory.");
@@ -517,6 +520,7 @@ function buttonClicked(element)
                 }
             }
             break;
+
             //fightSuccessTorch
             case gameStates[9]:
             {
@@ -544,26 +548,25 @@ function buttonClicked(element)
                 }
             }
             break;
+
             //fightFailure
             case gameStates[10]:
             {
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene(jsonData.scenes[gameStates[10]].toScene[0]);
+                        resetGame();
                         break;
                     case buttons[1]:
-                        transitionToScene(jsonData.scenes[gameStates[10]].toScene[1]);
                         break;
                     case buttons[2]:
-                        transitionToScene(jsonData.scenes[gameStates[10]].toScene[2]);
                         break;
                     case buttons[3]:
-                        transitionToScene(jsonData.scenes[gameStates[10]].toScene[3]);
                         break;
                 }
             }
             break;
+
             //daggerSuccess
             case gameStates[11]:
             {
@@ -595,8 +598,7 @@ function buttonClicked(element)
                     case buttons[3]:
                         if (inventory.get("Dagger"))
                         {
-                            removeItem("Dagger");
-                            transitionToScene(jsonData.scenes[gameStates[11]].toScene[2]);
+                            transitionToScene(jsonData.scenes[gameStates[11]].toScene[3]);
                         }
                         else{
                             console.warn("Dagger not in inventory.");
@@ -605,26 +607,25 @@ function buttonClicked(element)
                 }
             }
             break;
+
             //bossFightLoss
             case gameStates[12]:
             {
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene(jsonData.scenes[gameStates[12]].toScene[0]);
+                        resetGame();
                         break;
                     case buttons[1]:
-                        transitionToScene(jsonData.scenes[gameStates[12]].toScene[1]);
                         break;
                     case buttons[2]:
-                        transitionToScene(jsonData.scenes[gameStates[12]].toScene[2]);
                         break;
                     case buttons[3]:
-                        transitionToScene(jsonData.scenes[gameStates[12]].toScene[3]);
                         break;
                 }
             }
             break;
+            
             //bossFightAxe
             case gameStates[13]:
             {
@@ -634,17 +635,26 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[13]].toScene[0]);
                         break;
                     case buttons[1]:
-                        transitionToScene(jsonData.scenes[gameStates[13]].toScene[1]);
+                        if (inventory.get("Torch"))
+                        {
+                            transitionToScene(jsonData.scenes[gameStates[13]].toScene[1]);
+                            removeItem("Torch");
+                        }
                         break;
                     case buttons[2]:
                         transitionToScene(jsonData.scenes[gameStates[13]].toScene[2]);
                         break;
                     case buttons[3]:
-                        transitionToScene(jsonData.scenes[gameStates[13]].toScene[3]);
+                        if (inventory.get("Dagger"))
+                        {
+                            removeItem("Dagger");
+                            transitionToScene(jsonData.scenes[gameStates[13]].toScene[3]);
+                        }
                         break;
                 }
             }
             break;
+
             //bossFightTorch
             case gameStates[14]:
             {
@@ -660,27 +670,98 @@ function buttonClicked(element)
                         transitionToScene(jsonData.scenes[gameStates[14]].toScene[2]);
                         break;
                     case buttons[3]:
-                        transitionToScene(jsonData.scenes[gameStates[14]].toScene[3]);
+                        if (inventory.get("Dagger"))
+                        {
+                            removeItem("Dagger");
+                            transitionToScene(jsonData.scenes[gameStates[14]].toScene[3]);
+                        }
                         break;
                 }
             }
             break;
+
             //bossFightDagger
             case gameStates[15]:
             {
                 switch (element)
                 {
                     case buttons[0]:
-                        transitionToScene(jsonData.scenes[gameStates[15]].toScene[0]);
+                        if (inventory.get("Dagger"))
+                        {
+                            removeItem("Dagger");
+                            transitionToScene(jsonData.scenes[gameStates[15]].toScene[0]);
+                        }
                         break;
                     case buttons[1]:
-                        transitionToScene(jsonData.scenes[gameStates[15]].toScene[1]);
+                        if (inventory.get("Dagger"))
+                        {
+                            removeItem("Dagger");
+                            transitionToScene(jsonData.scenes[gameStates[15]].toScene[1]);
+                        }
                         break;
                     case buttons[2]:
-                        transitionToScene(jsonData.scenes[gameStates[15]].toScene[2]);
+                        if (inventory.get("Axe"))
+                        {
+                            removeItem("Axe");
+                            transitionToScene(jsonData.scenes[gameStates[15]].toScene[2]);
+                        }
                         break;
                     case buttons[3]:
                         transitionToScene(jsonData.scenes[gameStates[15]].toScene[3]);
+                        break;
+                }
+            }
+            break;
+
+            //bossFightDisarmed
+            case gameStates[16]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        transitionToScene(jsonData.scenes[gameStates[16]].toScene[0]);
+                        break;
+                    case buttons[1]:
+                        if (inventory.get("Dagger"))
+                        {
+                            removeItem("Dagger");
+                            transitionToScene(jsonData.scenes[gameStates[16]].toScene[1]);
+                        }
+                        break;
+                    case buttons[2]:
+                        if (inventory.get("Torch"))
+                        {
+                            removeItem("Torch");
+                            transitionToScene(jsonData.scenes[gameStates[16]].toScene[2]);
+                        }
+                        break;
+                    case buttons[3]:
+                        if (inventory.get("Axe"))
+                        {
+                            removeItem("Axe");
+                            transitionToScene(jsonData.scenes[gameStates[16]].toScene[3]);
+                        }
+                        break;
+                }
+            }
+            break;
+
+            //victory
+            case gameStates[17]:
+            {
+                switch (element)
+                {
+                    case buttons[0]:
+                        transitionToScene(jsonData.scenes[gameStates[17]].toScene[0]);
+                        break;
+                    case buttons[1]:
+                        transitionToScene(jsonData.scenes[gameStates[17]].toScene[1]);
+                        break;
+                    case buttons[2]:
+                        transitionToScene(jsonData.scenes[gameStates[17]].toScene[2]);
+                        break;
+                    case buttons[3]:
+                        transitionToScene(jsonData.scenes[gameStates[17]].toScene[3]);
                         break;
                 }
             }
@@ -696,15 +777,18 @@ function buttonClicked(element)
  */
 function resourceButtonClicked(element)
 {
-    let buttons = Object.values(optionButtons);
-    switch (element)
+    if (element.getAttribute("Active") == "true")
     {
-        case buttons[0]:
-            resetGame();
-            break;
-        case buttons[1]:
-            //close();
-            break;
+        let buttons = Object.values(optionButtons);
+        switch (element)
+        {
+            case buttons[0]:
+                resetGame();
+                break;
+            case buttons[1]:
+                //close();
+                break;
+        }
     }
 }
 
@@ -799,14 +883,18 @@ function transitionToScene(sceneName)
             //fightSuccessRock
             case scenes[7]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " axeReq";
+                choiceThree.className += " torchReq";
                 break;
             //fightSuccaxe
             case scenes[8]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " torchReq";
                 break;
             //fightSucctorch
             case scenes[9]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " axeReq";
                 break;
             //fightFailure
             case scenes[10]:
@@ -815,15 +903,43 @@ function transitionToScene(sceneName)
             //daggerSuccess
             case scenes[11]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " axeReq";
+                choiceThree.className += " torchReq";
+                choiceFour.className += " daggerReq";
                 break;
+            //bossFightLoss
             case scenes[12]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
                 break;
+            //bossFightAxe
             case scenes[13]:
                 updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " torchReq"
+                choiceFour.className += " daggerReq";
                 break;
-            //bossFight
-                
+            //bossFightTorch
+            case scenes[14]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceFour.className += " daggerReq";
+                break;
+            //bossFightDagger
+            case scenes[15]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceOne.className += " daggerReq";
+                choiceTwo.className += " daggerReq";
+                choiceThree.className += " axeReq";
+                break;
+            //bossFightDisarmed
+            case scenes[16]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                choiceTwo.className += " daggerReq";
+                choiceThree.className += " torchReq";
+                choiceFour.className += " axeReq";
+                break;
+            //victory
+            case scenes[17]:
+                updateHeaderText(jsonData.scenes[sceneName].headerText);
+                break;
         }
 
         transitionHeaderColor(jsonData.scenes[sceneName].headerColor);
@@ -843,6 +959,10 @@ function lockButtons()
     for (let x = 0; x < 4; x++)
     {
         Object.values(choiceButtons)[x].setAttribute("active", "false");
+    }
+    for (let y = 0; y < 2; y++)
+    {
+        Object.values(optionButtons)[y].setAttribute("active", "false");
     }
 }
 
@@ -875,6 +995,8 @@ function updateButtonText(button, newText, delay = 0)
     {
         animateText(button.id, newText);
         activateButton(button.id);
+        activateButton(restartButton.id);
+        activateButton(exitButton.id);
     }, delay);
 }
 
@@ -899,7 +1021,7 @@ function updateHeaderText(newText, extraText = ""){
 
 /**
  * 
- * @param {string} sceneName From jsonObject of transition function
+ * @param {string} newText From jsonObject of transition function
  */
 function updateMainText(newText, extraText = ""){
     animateText("mainParagraph", newText);
@@ -978,8 +1100,28 @@ function resetGame()
 {
     playerName = "";
     setupInventory();
+    clearInventoryCards();
     clearButtons();
     displayBeginning();
+    submitName("");
+    mainParagraph.innerHTML = "";
+    resetStyle();
+}
+
+function clearInventoryCards()
+{
+    let items = inventory.keys();
+    items.forEach((item) => {
+        if (doc.getElementById(item) != null)
+        {
+            doc.getElementById(item).remove();
+        }
+    });
+}
+
+function resetStyle()
+{
+    transitionHeaderColor("linear-gradient(.25turn, black, #222, black)");
 }
 
 //#region Deprecated

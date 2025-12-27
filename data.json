@@ -10,7 +10,7 @@
             "bodyText": "Please enter your name:",
             "choiceTexts": ["Submit.", "Random Name!", "", ""], 
             "headerText": "For now, what is your name?",
-            "headerColor": "linear-gradient(.25turn, white, #777, white)",
+            "headerColor": "linear-gradient(.25turn, black, #222, black)",
             "delay": 2000,
             "toScene": ["start", "start", "", ""]
         },
@@ -65,10 +65,10 @@
         
         "stealthFight": {
             "state": "stealthFight",
-            "bodyText": "You opt to slowly approach instead, causing your actions to be harder to detect. ",
+            "bodyText": "You opt to slowly approach instead, causing your actions to be harder to detect. The bandit keeps on taunting the other carts, egging them on into giving their belongings to him.",
             "choiceTexts": ["Grab a rock and strike.", "Use the axe to swing at him.", "Swing the torch as a distraction.", "Grab his dagger and use it against him."],
             "headerText": "Quietly, quietly...",
-            "headerColor": "rgb(30, 30, 30)",
+            "headerColor": "rgb(0, 0, 0)",
             "delay": 4000,
             "toScene": ["fightSuccessRock", "fightSuccessAxe", "fightSuccessTorch", "daggerSuccess"]
         },
@@ -77,7 +77,7 @@
             "bodyText": "Moving quietly, you approach as the bandit makes their demands toward the cart driver. 'Hand over all your goods and there won't be any trouble', he utters with a sly grin. Quickly grabbing a rock nearby, you burst out during his dialogue and catch him fully of guard. You quickly strike and bring him down, the rock sputtering in the dirt road beside you. A few onlookers quickly leap to the bandit, and take his gear instead, an ironic end to a ne'er-do-well. A large, muscular Orc approaches you, large two-handed weapon drawn. 'Not bad taking down the newbie', he starts, looking over the unconscious bandit with a look of disdain. He turns his attention to you, stating, 'You brought him down quick, les'see if you can take me too.'",
             "choiceTexts": ["Grab the rock again!", "Move to use the axe.", "Use the torch offensively.", "Run away!"],
             "headerText": "Surprised!",
-            "headerColor": "rgb(30, 30, 30)",
+            "headerColor": "rgb(20, 20, 20)",
             "delay": 4000,
             "toScene": ["bossFightLoss", "bossFightAxe", "bossFightTorch", "bossFightLoss"]
         },
@@ -94,17 +94,17 @@
             "state": "fightSuccessTorch",
             "bodyText": "You push forward with your torch, waving it erratically around as a distraction. A few onlookers quickly leap to the bandit and take him down. You see them all retreating back to their carts shortly thereafter, as another individual begins approaching: A large, muscular Orc. Drawing his large two-handed axe, he yells out, 'Relying on other people just isn't my style. Let's make this personal!'",
             "choiceTexts": ["Grab a rock and strike!", "Move to use the axe.", "Fight him unarmed.", "Try to disarm him."],
-            "headerText": "",
-            "headerColor": "rgb(30, 30, 30)",
+            "headerText": "With a little help from strangers.",
+            "headerColor": "rgb(150, 20, 20)",
             "delay": 4000,
             "toScene": ["bossFightLoss", "bossFightAxe", "bossFightLoss", "bossFightDisarmed"]
         },
         "fightFailure": {
             "state": "fightFailure",
-            "bodyText": "",
-            "choiceTexts": ["", "", "", ""],
+            "bodyText": "The bandit is able to nimbly dodge as you lash out, and quickly retaliates with a dagger to your chest. Blood begins dripping, then pouring out as your vision slowly dims to darkness.",
+            "choiceTexts": ["Restart.", "", "", ""],
             "headerText": "You slowly feel the life drain away...",
-            "headerColor": "rgb(30, 30, 30)",
+            "headerColor": "rgb(0, 0, 0)",
             "delay": 4000,
             "toScene": ["", "", "", ""]
         },
@@ -112,7 +112,7 @@
             "state": "daggerSuccess",
             "bodyText": "Quickly grabbing and then using his own blade against him, you quietly take the bandit down. Wiping off the blade, you add it to your gear as well. As you do, a large, muscular Orc approaches you, large two-handed weapon drawn. 'A bit of a sneaky type you are. I dun like sneaky types'",
             "choiceTexts": ["Grab a rock and strike!", "Move to use the axe.", "Swing the torch aggressively.", "Use your new dagger!"],
-            "headerText": "",
+            "headerText": "A satisfying coup in combat.",
             "headerColor": "rgb(30, 30, 30)",
             "delay": 4000,
             "toScene": ["bossFightLoss", "bossFightAxe", "bossFightTorch", "bossFightDagger"]
@@ -120,50 +120,60 @@
 
         "bossFightLoss": {
             "state": "bossFightLoss",
-            "bodyText": "",
-            "choiceTexts": ["", "", "", ""],
-            "headerText": "",
-            "headerColor": "rgb(30, 30, 30)",
+            "bodyText": "You begin to take action, but are quickly met with a shoulder charge instead. The orc is quite swift, and knocks you flat out instantly. You return to consciousness right as his large axe slams down into you. You feel life draining away. The pain subsides as darkness overtakes your vision.",
+            "choiceTexts": ["Restart.", "", "", ""],
+            "headerText": "You slowly feel the life drain away...",
+            "headerColor": "rgb(0, 0, 0)",
             "delay": 4000,
             "toScene": ["", "", "", ""]
         },
 
         "bossFightAxe": {
             "state": "bossFightAxe",
-            "bodyText": "",
-            "choiceTexts": ["", "", "", ""],
-            "headerText": "",
+            "bodyText": "You ready your axe quickly, and are barely able to meet his weapon in a clash. Your axe breaks in half in the collision, but he is caught off-guard by the sudden weight shift.",
+            "choiceTexts": ["Jump on his back.", "Use the opportunity for fire.", "Fight hand to hand instead.", "Go for a weak spot."],
+            "headerText": "A setback and opportunity.",
             "headerColor": "rgb(30, 30, 30)",
             "delay": 4000,
-            "toScene": ["", "", "", ""]
+            "toScene": ["bossFightDisarmed", "bossFightTorch", "bossFightLoss", "victory"]
         },
 
         "bossFightTorch": {
             "state": "bossFightTorch",
-            "bodyText": "",
-            "choiceTexts": ["", "", "", ""],
-            "headerText": "",
-            "headerColor": "rgb(30, 30, 30)",
+            "bodyText": "You step back with torch in hand and begin to swing it at the fearsome orc. A small section of his armor begins to catch fire, and you see an opportunity arise as he tries to put it out.",
+            "choiceTexts": ["Reach for his weapon.", "Stay back and let the fire catch more.", "Move aggressively with your hands.", "Use the dagger while he's distracted."],
+            "headerText": "An ignition of hope.",
+            "headerColor": "rgb(150, 20, 20)",
             "delay": 4000,
-            "toScene": ["", "", "", ""]
+            "toScene": ["bossFightDisarmed", "bossFightLoss", "bossFightLoss", "victory"]
         },
 
         "bossFightDagger": {
             "state": "bossFightDagger",
-            "bodyText": "",
-            "choiceTexts": ["", "", "", ""],
-            "headerText": "",
-            "headerColor": "rgb(30, 30, 30)",
+            "bodyText": "Grabbing your new weapon, you move to dodge past his large swings. You're able to get in a quick strike after evading one of his. Briefly grabbing his side, now red with blood, he adjusts his grip and rushes as you again with a yell.",
+            "choiceTexts": ["Evade again and strike!", "Turn aggressive and assault him.", "Swap to the axe quickly!", "Move to disarm him."],
+            "headerText": "Old dog, new tricks.",
+            "headerColor": "rgb(70, 70, 20)",
             "delay": 4000,
-            "toScene": ["", "", "", ""]
+            "toScene": ["bossFightLoss", "victory", "victory", "bossFightLoss"]
         },
 
         "bossFightDisarmed": {
             "state": "bossFightDisarmed",
-            "bodyText": "",
-            "choiceTexts": ["", "", "", ""],
-            "headerText": "",
-            "headerColor": "rgb(30, 30, 30)",
+            "bodyText": "You swiftly move around the orc and grab the haft of his axe, twisting it out of his grip. With a bit of luck, this seems to be his only form of fighting. The larger axe is a bit unwieldy in your hands.",
+            "choiceTexts": ["Try the new axe anyway.", "Go in for a quick stab.", "Use the torch offensively.", "Swing with your axe instead."],
+            "headerText": "A turn of the tables.",
+            "headerColor": "rgb(125, 100, 30)",
+            "delay": 4000,
+            "toScene": ["bossFightLoss", "victory", "bossFightLoss", "victory"]
+        },
+
+        "victory": {
+            "state": "victory",
+            "bodyText": "Through a gruelling fight, you are able to finally get the upper hand on the bandit leader. Your final blow, through self-defense, doesn't bring much joy; though you are still alive. Those around you cheer you on in a round of applause. You victoriously begin walking past all the carts into the Dwarven city in the mountain, Don-Khaldir.",
+            "choiceTexts": ["Thank", "you", "for", "playing!"],
+            "headerText": "Victory!",
+            "headerColor": "rgb(40, 220, 40)",
             "delay": 4000,
             "toScene": ["", "", "", ""]
         }
